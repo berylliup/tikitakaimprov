@@ -117,16 +117,15 @@ export default function Home() {
       </section>
 {/* OYUNCULAR STRIP */}
 <section className="w-full bg-[#FFCB00] py-16">
-  <div className="mx-auto flex max-w-none flex-col items-center px-10">
-    
-    {/* Title – BIG, CENTER, NO BOX */}
-    <h2 className="mb-14 text-4xl sm:text-5xl font-extrabold uppercase tracking-widest text-black">
+  <div className="mx-auto flex max-w-none flex-col items-center px-6 sm:px-10">
+    {/* Title */}
+    <h2 className="mb-10 sm:mb-14 text-4xl sm:text-5xl font-extrabold uppercase tracking-widest text-black text-center">
       OYUNCULAR
     </h2>
 
-    {/* Players – single row, no visible scrollbar */}
-    <div className="relative w-full overflow-hidden">
-      <div className="flex justify-center gap-14">
+    {/* Players */}
+    <div className="w-full overflow-x-auto no-scrollbar">
+      <div className="flex flex-nowrap gap-8 sm:gap-14 px-2 sm:justify-center">
         {[
           { name: "ARZU", src: "/arzu.png" },
           { name: "BERİL", src: "/beril.png" },
@@ -134,19 +133,16 @@ export default function Home() {
           { name: "HİKMET", src: "/hikmet.png" },
           { name: "VEYİS", src: "/veyis.png" },
         ].map((p) => (
-          <div key={p.name} className="flex flex-col items-center">
-            
-            {/* Photo */}
+          <div key={p.name} className="flex flex-col items-center shrink-0">
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
               src={p.src}
               alt={p.name}
-              className="h-[420px] w-[240px] rounded-[40px] object-cover"
+              className="h-[360px] w-[210px] sm:h-[420px] sm:w-[240px] rounded-[40px] object-cover"
             />
 
-            {/* Name – KEEP AS IS */}
-            <div className="mt-6 rounded-xl bg-white px-10 py-2">
-              <span className="text-xl font-extrabold uppercase tracking-wide text-black">
+            <div className="mt-5 sm:mt-6 rounded-xl bg-white px-8 sm:px-10 py-2">
+              <span className="text-lg sm:text-xl font-extrabold uppercase tracking-wide text-black">
                 {p.name}
               </span>
             </div>
@@ -154,9 +150,9 @@ export default function Home() {
         ))}
       </div>
     </div>
-
   </div>
 </section>
+
 
 
       {/* SHOWS (EVENT CARD) */}
