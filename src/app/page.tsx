@@ -1,6 +1,6 @@
 import Image from "next/image";
 
-const TICKET_URL = "https://biletinial.com/tr-tr/mekan/kilcik-mekan";
+const TICKET_URL = "https://biletinial.com/tr-tr/tiyatro/tiki-taka-dogaclama-tiyatro";
 const IG_URL = "https://instagram.com/tikitakaimpro";
 
 export default function Home() {
