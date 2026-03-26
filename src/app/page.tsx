@@ -169,48 +169,51 @@ export default function Home() {
     </a>
   </div>
 
-  <div className="mt-10">
+  <div className="mt-10 grid gap-6 sm:grid-cols-2 md:grid-cols-3">
+  {[
+    { date: "Nisan - 1" },
+    { date: "Nisan - 9" },
+    { date: "Nisan - 17" },
+    { date: "Nisan - 24" },
+    { date: "Mayıs - 1" },
+    { date: "Mayıs - 13" },
+    { date: "Mayıs - 20" },
+  ].map((show, i) => (
     <a
+      key={i}
       href={TICKET_URL}
       target="_blank"
       rel="noreferrer"
-      className="group block w-full max-w-[360px] overflow-hidden rounded-2xl border border-black/10 bg-white hover:-translate-y-0.5 hover:shadow-lg transition"
-      aria-label="Bilet Al"
+      className="group block overflow-hidden rounded-2xl border border-black/10 bg-white hover:-translate-y-0.5 hover:shadow-lg transition"
     >
-      {/* Poster */}
-      {/* eslint-disable-next-line @next/next/no-img-element */}
       <img
         src="/poster.jpeg"
-        alt="TikiTaka - 29 Ocak"
-        className="h-[320px] w-full object-cover"
+        alt={`TikiTaka - ${show.date}`}
+        className="h-[260px] w-full object-cover"
       />
 
-      {/* Content */}
       <div className="p-5">
-        <h3 className="text-lg font-extrabold leading-snug">
+        <h3 className="text-lg font-extrabold">
           TikiTaka Impro
         </h3>
 
         <p className="mt-2 text-sm text-zinc-600">
-          Ocak - 29 • 20:00
+          {show.date} • 20:00
         </p>
 
         <p className="mt-2 text-sm font-semibold text-zinc-800">
-          Tiyatro Sporu
+          Kadıköy Kılçık Mekan
         </p>
 
         <div className="mt-5">
-          <span className="inline-flex items-center justify-center rounded-xl bg-[#FFCB00] px-5 py-3 text-sm font-extrabold text-black group-hover:opacity-90 transition">
+          <span className="flex w-full items-center justify-center rounded-xl bg-[#FFCB00] px-5 py-3 text-sm font-extrabold text-black text-center">
             BİLETİNİ AL
           </span>
         </div>
       </div>
     </a>
-
-    <p className="mt-4 text-sm text-zinc-600">
-      Mekan: <span className="font-semibold">Kılçık Mekan, Kadıköy</span>
-    </p>
-  </div>
+  ))}
+</div>
 </section>
 
 
