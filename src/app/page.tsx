@@ -18,11 +18,9 @@ export default function Home() {
         priority
         className="h-14 w-14 shrink-0 object-contain sm:h-[56px] sm:w-[56px]"
       />
-      <span className="text-2xl font-extrabold leading-none tracking-tight sm:text-xl md:text-xl">
-        TikiTaka
-        <br className="block sm:hidden" />
-        <span className="sm:ml-1">Impro</span>
-      </span>
+      <span className="text-xl font-extrabold leading-none tracking-tight whitespace-nowrap">
+  TikiTaka Impro
+</span>
     </a>
 
     <nav className="hidden md:flex items-center gap-8 text-lg font-extrabold uppercase tracking-wide">
