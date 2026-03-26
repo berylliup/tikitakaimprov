@@ -85,7 +85,7 @@ export default function Home() {
       </header>
 
       {/* HERO (FULL SCREEN IMAGE + TEXT OVERLAY) */}
-      <section className="relative h-screen w-full">
+      <section className="relative min-h-[78vh] md:h-screen w-full">
         <Image
           src="/group.png"
           alt="TikiTaka Impro ekip"
@@ -95,25 +95,25 @@ export default function Home() {
         />
         <div className="absolute inset-0 bg-black/40" />
 
-        <div className="relative z-10 flex h-full flex-col items-center justify-center px-6 text-center text-white">
-          <h1 className="text-4xl sm:text-5xl font-bold tracking-tight">
-            Her an başka. Her an Tiki Taka.
-          </h1>
+        <div className="relative z-10 flex h-full flex-col items-center justify-center px-5 py-16 text-center text-white md:px-6">
+  <h1 className="max-w-[320px] text-3xl font-bold leading-tight tracking-tight sm:max-w-none sm:text-5xl">
+    Her an başka. Her an Tiki Taka.
+  </h1>
 
-          <p className="mt-4 max-w-xl text-lg text-white/90">
-            Uzun form doğaçlama tiyatro kolektifi. Seyirciyle birlikte anında
-            yazılan oyunlar.
-          </p>
+  <p className="mt-3 max-w-[300px] text-base leading-6 text-white/90 sm:mt-4 sm:max-w-xl sm:text-lg">
+    Uzun form doğaçlama tiyatro kolektifi. Seyirciyle birlikte anında
+    yazılan oyunlar.
+  </p>
 
-          <a
-            href={TICKET_URL}
-            target="_blank"
-            rel="noreferrer"
-            className="mt-8 rounded-full bg-[#FFCB00] px-10 py-4 text-lg font-semibold text-black hover:opacity-90 transition"
-          >
-            Bilet Al
-          </a>
-        </div>
+  <a
+    href={TICKET_URL}
+    target="_blank"
+    rel="noreferrer"
+    className="mt-6 inline-flex min-w-[170px] items-center justify-center rounded-full bg-[#FFCB00] px-8 py-3 text-base font-semibold text-black text-center hover:opacity-90 transition sm:mt-8 sm:px-10 sm:py-4 sm:text-lg"
+  >
+    Bilet Al
+  </a>
+</div>
       </section>
 {/* OYUNCULAR STRIP */}
 <section className="w-full bg-[#FFCB00] py-16">
