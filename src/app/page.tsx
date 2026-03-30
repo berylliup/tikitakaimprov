@@ -8,7 +8,7 @@ const EMAILJS_SERVICE  = "service_r5nfslt";
 const EMAILJS_TEMPLATE = "template_8rlm4b7";
 const EMAILJS_KEY      = "A2YS30u-Pv8tSCZ-V";
 
-const GALLERY = Array.from({ length: 9 }, (_, i) => `/gallery${i + 1}.JPG`);
+const GALLERY = Array.from({ length: 9 }, (_, i) => `/gallery${i + 1}.png`);
 
 function GallerySection() {
   const [active, setActive] = useState<string | null>(null);
@@ -81,8 +81,8 @@ const PLAYERS = [
   { name: "BARANSEL", src: "/baransel.png" },
   { name: "BERİL", src: "/beril.png" },
   { name: "HİKMET", src: "/hikmet.png" },
-  { name: "SEDAT", src: "/sedat.JPG" },
-  { name: "TOLGA", src: "/tolga.jpg" },
+  { name: "SEDAT", src: "/sedat.png" },
+  { name: "TOLGA", src: "/tolga.png" },
   { name: "VEYİS", src: "/veyis.png" },
 ];
 
@@ -177,7 +177,7 @@ export default function Home() {
 
       {/* ── HERO ── */}
       <section className="relative h-screen w-full">
-        <Image src="/group.jpg" alt="TikiTaka Impro ekip" fill priority className="object-cover" />
+        <Image src="/group.png" alt="TikiTaka Impro ekip" fill priority className="object-cover" />
         <div className="absolute inset-0 bg-black/40" />
         <div className="relative z-10 flex h-full flex-col items-center justify-center px-6 text-center text-white">
           <h1 className="text-4xl sm:text-5xl font-bold tracking-tight">Her an başka. Her an Tiki Taka.</h1>
@@ -326,7 +326,7 @@ export default function Home() {
       <section id="corporate" className="mx-auto max-w-6xl px-6 py-20">
         <div className="grid gap-16 md:grid-cols-2 items-center">
           <div className="relative w-full overflow-hidden rounded-3xl order-last md:order-first" style={{ aspectRatio: "4 / 3" }}>
-            <Image src="/aboutus5.jpg" alt="Tiki Taka kurumsal" fill className="object-cover" />
+            <Image src="/aboutus5.png" alt="Tiki Taka kurumsal" fill className="object-cover" />
           </div>
           <div>
             <h2 className="text-3xl font-bold mb-6">Kurumsal çalışmalar</h2>
