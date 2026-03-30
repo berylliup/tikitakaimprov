@@ -311,7 +311,7 @@ export default function Home() {
       <section id="corporate" className="mx-auto max-w-6xl px-6 py-20">
         <div className="grid gap-16 md:grid-cols-2 items-center">
           <div className="relative w-full overflow-hidden rounded-3xl order-last md:order-first" style={{ aspectRatio: "4 / 3" }}>
-            <Image src="/aboutus4.jpg" alt="Tiki Taka kurumsal" fill className="object-cover" />
+            <Image src="/aboutus5.jpg" alt="Tiki Taka kurumsal" fill className="object-cover" />
           </div>
           <div>
             <h2 className="text-3xl font-bold mb-6">Kurumsal çalışmalar</h2>
