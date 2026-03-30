@@ -8,7 +8,7 @@ const EMAILJS_SERVICE  = "service_r5nfslt";
 const EMAILJS_TEMPLATE = "template_8rlm4b7";
 const EMAILJS_KEY      = "A2YS30u-Pv8tSCZ-V";
 
-const GALLERY = Array.from({ length: 9 }, (_, i) => `/gallery${i + 1}.jpg`);
+const GALLERY = Array.from({ length: 9 }, (_, i) => `/gallery${i + 1}.JPG`);
 
 function GallerySection() {
   const [active, setActive] = useState<string | null>(null);
@@ -81,7 +81,7 @@ const PLAYERS = [
   { name: "BARANSEL", src: "/baransel.png" },
   { name: "BERİL", src: "/beril.png" },
   { name: "HİKMET", src: "/hikmet.png" },
-  { name: "SEDAT", src: "/sedat.jpg" },
+  { name: "SEDAT", src: "/sedat.JPG" },
   { name: "TOLGA", src: "/tolga.jpg" },
   { name: "VEYİS", src: "/veyis.png" },
 ];
