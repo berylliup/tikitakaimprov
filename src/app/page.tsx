@@ -78,9 +78,11 @@ const SHOWS = [
 
 const PLAYERS = [
   { name: "ARZU", src: "/arzu.png" },
-  { name: "BERİL", src: "/beril.png" },
   { name: "BARANSEL", src: "/baransel.png" },
+  { name: "BERİL", src: "/beril.png" },
   { name: "HİKMET", src: "/hikmet.png" },
+  { name: "SEDAT", src: "/sedat.jpg" },
+  { name: "TOLGA", src: "/tolga.jpg" },
   { name: "VEYİS", src: "/veyis.png" },
 ];
 
@@ -175,7 +177,7 @@ export default function Home() {
 
       {/* ── HERO ── */}
       <section className="relative h-screen w-full">
-        <Image src="/group.png" alt="TikiTaka Impro ekip" fill priority className="object-cover" />
+        <Image src="/group.jpg" alt="TikiTaka Impro ekip" fill priority className="object-cover" />
         <div className="absolute inset-0 bg-black/40" />
         <div className="relative z-10 flex h-full flex-col items-center justify-center px-6 text-center text-white">
           <h1 className="text-4xl sm:text-5xl font-bold tracking-tight">Her an başka. Her an Tiki Taka.</h1>
@@ -188,38 +190,54 @@ export default function Home() {
 
       {/* ── OYUNCULAR ── */}
       <section className="w-full bg-[#FFCB00] py-16">
-        <div className="mx-auto flex max-w-none flex-col items-center px-6 sm:px-10">
-          <h2 className="mb-10 sm:mb-14 text-4xl sm:text-5xl font-extrabold uppercase tracking-widest text-black text-center">OYUNCULAR</h2>
-          <div className="w-full overflow-x-auto [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
-            <div className="flex flex-nowrap gap-8 sm:gap-14 px-2 sm:justify-center">
-              {PLAYERS.map((p) => (
-                <div key={p.name} className="flex flex-col items-center shrink-0">
-                  <div className="relative h-[360px] w-[210px] sm:h-[420px] sm:w-[240px]">
-                    <Image src={p.src} alt={p.name} fill className="rounded-[40px] object-cover" />
-                  </div>
-                  <div className="mt-5 sm:mt-6 rounded-xl bg-white px-8 sm:px-10 py-2">
-                    <span className="text-lg sm:text-xl font-extrabold uppercase tracking-wide text-black">{p.name}</span>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-      </section>
+  <div className="mx-auto flex max-w-none flex-col items-center px-6 sm:px-10">
 
+    <h2 className="mb-10 sm:mb-14 text-4xl sm:text-5xl font-extrabold uppercase tracking-widest text-black text-center">
+      OYUNCULAR
+    </h2>
+
+    <div className="w-full overflow-hidden">
+      <div className="flex justify-center items-end gap-4 sm:gap-6 flex-wrap">
+
+        {PLAYERS.map((p) => (
+          <div key={p.name} className="flex flex-col items-center">
+
+            <div className="relative h-[240px] w-[150px] sm:h-[260px] sm:w-[160px]">
+              <Image
+                src={p.src}
+                alt={p.name}
+                fill
+                className="rounded-[30px] object-cover"
+              />
+            </div>
+
+            <div className="mt-4 rounded-xl bg-white px-4 py-2">
+              <span className="text-sm sm:text-base font-extrabold uppercase tracking-wide text-black">
+                {p.name}
+              </span>
+            </div>
+
+          </div>
+        ))}
+
+      </div>
+    </div>
+
+  </div>
+</section>
       {/* ── GÖSTERİLER ── */}
       <section id="shows" className="mx-auto max-w-6xl px-6 py-20">
         <div className="flex items-end justify-between gap-6">
           <h2 className="text-3xl font-bold">Gösteriler</h2>
           <a href={TICKET_URL} target="_blank" rel="noreferrer" className="text-sm font-semibold underline hover:opacity-70 transition">Biletinial →</a>
         </div>
-        <div className="mt-10 grid gap-6 sm:grid-cols-2 md:grid-cols-3">
+        <div className="mt-10 grid gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
           {SHOWS.map((show, i) => {
             const dateLabel = show.date.toLocaleDateString("tr-TR", { day: "numeric", month: "long" });
             const timeLabel = show.date.toLocaleTimeString("tr-TR", { hour: "2-digit", minute: "2-digit" });
             return (
               <a key={i} href={TICKET_URL} target="_blank" rel="noreferrer" className="group block overflow-hidden rounded-2xl border border-black/10 bg-white hover:-translate-y-0.5 hover:shadow-lg transition">
-                <img src="/poster.jpeg" alt={`TikiTaka - ${dateLabel}`} className="h-[260px] w-full object-cover" />
+                <img src="/poster.jpeg" alt={`TikiTaka - ${dateLabel}`} className="h-[200px] w-full object-cover" />
                 <div className="p-5">
                   <h3 className="text-lg font-extrabold">TikiTaka Impro</h3>
                   <p className="mt-2 text-sm text-zinc-600">{dateLabel} • {timeLabel}</p>
@@ -237,10 +255,7 @@ export default function Home() {
       {/* ── HAKKIMIZDA ── */}
       <section id="about" className="mx-auto max-w-6xl px-6 py-20">
         <h2 className="text-3xl font-bold">Hakkımızda</h2>
-        <div className="relative mt-10 w-full overflow-hidden rounded-3xl" style={{ aspectRatio: "16 / 9" }}>
-          <Image src="/aboutus1.jpg" alt="Tiki Taka sahnede" fill className="object-cover" />
-        </div>
-        <div className="mt-16 grid gap-12 md:grid-cols-2 items-center">
+        <div className="mt-10 grid gap-12 md:grid-cols-2 items-center">
           <div className="text-zinc-800 leading-8 flex flex-col justify-center">
             <p className="mb-6">
               Tiki Taka, 2021 yılında <strong>Hayal Meal Sahne</strong>{" "}bünyesinde bir araya gelen oyuncular tarafından kuruldu. O günden bu yana aynı sahnede, aynı oyunda ve aynı merakla birlikte doğaçlıyoruz.
