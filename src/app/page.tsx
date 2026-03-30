@@ -8,7 +8,7 @@ const EMAILJS_SERVICE  = "service_r5nfslt";
 const EMAILJS_TEMPLATE = "template_8rlm4b7";
 const EMAILJS_KEY      = "A2YS30u-Pv8tSCZ-V";
 
-const GALLERY = Array.from({ length: 9 }, (_, i) => `/gallery${i + 1}.jpg`);
+const GALLERY = Array.from({ length: 9 }, (_, i) => `/gallery${i + 1}.JPG`);
 
 function GallerySection() {
   const [active, setActive] = useState<string | null>(null);
@@ -81,8 +81,8 @@ const PLAYERS = [
   { name: "BARANSEL", src: "/baransel.png" },
   { name: "BERİL", src: "/beril.png" },
   { name: "HİKMET", src: "/hikmet.png" },
-  { name: "SEDAT", src: "/sedat.jpg" },
-  { name: "TOLGA", src: "/tolga.jpg" },
+  { name: "SEDAT", src: "/sedat.JPG" },
+  { name: "TOLGA", src: "/tolga.JPG" },
   { name: "VEYİS", src: "/veyis.png" },
 ];
 
@@ -177,7 +177,7 @@ export default function Home() {
 
       {/* ── HERO ── */}
       <section className="relative h-screen w-full">
-        <Image src="/group.jpg" alt="TikiTaka Impro ekip" fill priority className="object-cover" />
+        <Image src="/group.JPG" alt="TikiTaka Impro ekip" fill priority className="object-cover" />
         <div className="absolute inset-0 bg-black/40" />
         <div className="relative z-10 flex h-full flex-col items-center justify-center px-6 text-center text-white">
           <h1 className="text-4xl sm:text-5xl font-bold tracking-tight">Her an başka. Her an Tiki Taka.</h1>
