@@ -26,7 +26,7 @@ export const metadata: Metadata = {
     siteName: "TikiTaka Impro",
     images: [
       {
-        url: "https://tikitakaimpro.com/group.jpg",
+        url: "https://tikitakaimpro.com/group.jpeg",
         width: 1200,
         height: 630,
         alt: "TikiTaka Impro",
@@ -40,7 +40,7 @@ export const metadata: Metadata = {
     title: "TikiTaka Impro — Doğaçlama Tiyatro",
     description:
       "Uzun form doğaçlama tiyatro kolektifi. Seyirciyle birlikte anında yazılan oyunlar.",
-    images: ["https://tikitakaimpro.com/group.jpg"],
+    images: ["https://tikitakaimpro.com/group.jpeg"],
   },
   metadataBase: new URL("https://tikitakaimpro.com"),
 };

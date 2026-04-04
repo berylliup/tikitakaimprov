@@ -14,15 +14,15 @@ function GallerySection() {
   const [active, setActive] = useState<string | null>(null);
 
   return (
-    <section className="mx-auto max-w-6xl px-6 py-20">
+    <section className="mx-auto max-w-6xl px-4 sm:px-6 py-20">
       <h2 className="text-3xl font-bold mb-10">Galeri</h2>
 
-      <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+      <div className="grid grid-cols-2 md:grid-cols-3 gap-3 sm:gap-4">
         {GALLERY.map((src) => (
           <button
             key={src}
             onClick={() => setActive(src)}
-            className="relative overflow-hidden rounded-2xl focus:outline-none group"
+            className="relative overflow-hidden rounded-2xl focus:outline-none group min-h-[44px]"
             style={{ aspectRatio: "3 / 2" }}
           >
             <Image
@@ -44,7 +44,7 @@ function GallerySection() {
             <Image src={active} alt="TikiTaka Impro" fill className="object-contain rounded-2xl" />
             <button
               onClick={() => setActive(null)}
-              className="absolute top-3 right-3 h-9 w-9 flex items-center justify-center rounded-full bg-black/60 text-white text-lg font-bold hover:bg-black transition"
+              className="absolute top-3 right-3 h-11 w-11 flex items-center justify-center rounded-full bg-black/60 text-white text-lg font-bold hover:bg-black transition"
             >
               ✕
             </button>
@@ -176,33 +176,49 @@ export default function Home() {
       </header>
 
       {/* ── HERO ── */}
-      <section className="relative h-screen w-full">
-        <Image src="/group.png" alt="TikiTaka Impro ekip" fill priority className="object-cover" />
-        <div className="absolute inset-0 bg-black/40" />
-        <div className="relative z-10 flex h-full flex-col items-center justify-center px-6 text-center text-white">
-          <h1 className="text-4xl sm:text-5xl font-bold tracking-tight">Her an başka. Her an Tiki Taka.</h1>
-          <p className="mt-4 max-w-xl text-lg text-white/90">Uzun form doğaçlama tiyatro kolektifi. Seyirciyle birlikte anında yazılan oyunlar.</p>
-          <a href={TICKET_URL} target="_blank" rel="noreferrer" className="mt-8 rounded-full bg-[#FFCB00] px-10 py-4 text-lg font-semibold text-black hover:opacity-90 transition">
-            Bilet Al
-          </a>
-        </div>
-      </section>
+      {/* ── HERO ── */}
+<section className="relative w-full bg-black md:h-screen">
+  <div className="relative w-full aspect-[16/16] sm:aspect-[16/9] md:h-full md:aspect-auto">
+    <Image
+      src="/group2.png"
+      alt="TikiTaka Impro ekip"
+      fill
+      priority
+     className="object-cover object-[50%_20%]"
+    />
+    <div className="absolute inset-0 bg-black/30 md:bg-black/40" />
+    <div className="relative z-10 flex h-full flex-col items-center justify-center px-6 text-center text-white">
+      <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight">
+        Her an başka. Her an Tiki Taka.
+      </h1>
+      <p className="mt-4 max-w-xl text-base sm:text-lg text-white/90">
+        Uzun form doğaçlama tiyatro kolektifi. Seyirciyle birlikte anında yazılan oyunlar.
+      </p>
+      <a
+        href={TICKET_URL}
+        target="_blank"
+        rel="noreferrer"
+        className="mt-8 rounded-full bg-[#FFCB00] px-8 sm:px-10 py-3 sm:py-4 text-base sm:text-lg font-semibold text-black hover:opacity-90 transition"
+      >
+        Bilet Al
+      </a>
+    </div>
+  </div>
+</section>
 
       {/* ── OYUNCULAR ── */}
-      <section className="w-full bg-[#FFCB00] py-16">
-  <div className="mx-auto flex max-w-none flex-col items-center px-6 sm:px-10">
-
+      {/* ── OYUNCULAR ── */}
+<section className="w-full bg-[#FFCB00] py-16">
+  <div className="mx-auto max-w-[1600px] px-4 sm:px-6 lg:px-8">
     <h2 className="mb-10 sm:mb-14 text-4xl sm:text-5xl font-extrabold uppercase tracking-widest text-black text-center">
       OYUNCULAR
     </h2>
 
-    <div className="w-full overflow-hidden">
-      <div className="flex justify-center items-end gap-4 sm:gap-6 flex-wrap">
-
+    <div className="overflow-x-auto overflow-y-hidden no-scrollbar">
+      <div className="flex w-max min-w-full items-end justify-start lg:justify-center gap-4 sm:gap-5 lg:gap-4 xl:gap-6 flex-nowrap pb-2">
         {PLAYERS.map((p) => (
-          <div key={p.name} className="flex flex-col items-center">
-
-            <div className="relative h-[240px] w-[150px] sm:h-[260px] sm:w-[160px]">
+          <div key={p.name} className="flex shrink-0 flex-col items-center">
+            <div className="relative h-[220px] w-[135px] sm:h-[240px] sm:w-[145px] lg:h-[220px] lg:w-[130px] xl:h-[250px] xl:w-[150px]">
               <Image
                 src={p.src}
                 alt={p.name}
@@ -210,50 +226,60 @@ export default function Home() {
                 className="rounded-[30px] object-cover"
               />
             </div>
-
             <div className="mt-4 rounded-xl bg-white px-4 py-2">
               <span className="text-sm sm:text-base font-extrabold uppercase tracking-wide text-black">
                 {p.name}
               </span>
             </div>
-
           </div>
         ))}
-
       </div>
     </div>
-
   </div>
 </section>
+
       {/* ── GÖSTERİLER ── */}
-      <section id="shows" className="mx-auto max-w-6xl px-6 py-20">
+      <section id="shows" className="mx-auto max-w-6xl px-4 sm:px-6 py-20">
         <div className="flex items-end justify-between gap-6">
           <h2 className="text-3xl font-bold">Gösteriler</h2>
           <a href={TICKET_URL} target="_blank" rel="noreferrer" className="text-sm font-semibold underline hover:opacity-70 transition">Biletinial →</a>
         </div>
-        <div className="mt-10 grid gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
-          {SHOWS.map((show, i) => {
-            const dateLabel = show.date.toLocaleDateString("tr-TR", { day: "numeric", month: "long" });
-            const timeLabel = show.date.toLocaleTimeString("tr-TR", { hour: "2-digit", minute: "2-digit" });
-            return (
-              <a key={i} href={TICKET_URL} target="_blank" rel="noreferrer" className="group block overflow-hidden rounded-2xl border border-black/10 bg-white hover:-translate-y-0.5 hover:shadow-lg transition">
-                <img src="/poster.jpeg" alt={`TikiTaka - ${dateLabel}`} className="h-[200px] w-full object-cover" />
-                <div className="p-5">
-                  <h3 className="text-lg font-extrabold">TikiTaka Impro</h3>
-                  <p className="mt-2 text-sm text-zinc-600">{dateLabel} • {timeLabel}</p>
-                  <p className="mt-2 text-sm font-semibold text-zinc-800">Kadıköy Kılçık Mekan</p>
-                  <div className="mt-5">
-                    <span className="flex w-full items-center justify-center rounded-xl bg-[#FFCB00] px-5 py-3 text-sm font-extrabold text-black">BİLETİNİ AL</span>
-                  </div>
-                </div>
-              </a>
-            );
-          })}
+        <div className="mt-10 grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-4">
+  {SHOWS.map((show, i) => {
+    const dateLabel = show.date.toLocaleDateString("tr-TR", { day: "numeric", month: "long" });
+    const timeLabel = show.date.toLocaleTimeString("tr-TR", { hour: "2-digit", minute: "2-digit" });
+
+    return (
+      <a
+        key={i}
+        href={TICKET_URL}
+        target="_blank"
+        rel="noreferrer"
+        className="group block overflow-hidden rounded-2xl border border-black/10 bg-white hover:-translate-y-0.5 hover:shadow-lg transition"
+      >
+        <img
+          src="/poster.jpeg"
+          alt={`TikiTaka - ${dateLabel}`}
+          className="h-[140px] sm:h-[200px] w-full object-cover"
+        />
+        <div className="p-3 sm:p-5">
+          <h3 className="text-sm sm:text-lg font-extrabold">TikiTaka Impro</h3>
+          <p className="mt-2 text-[11px] sm:text-sm text-zinc-600">{dateLabel} • {timeLabel}</p>
+          <p className="mt-2 text-[11px] sm:text-sm font-semibold text-zinc-800">Kadıköy Kılçık Mekan</p>
+          <div className="mt-4 sm:mt-5">
+            <span className="flex w-full items-center justify-center rounded-xl bg-[#FFCB00] px-3 py-2 sm:px-5 sm:py-3 text-[11px] sm:text-sm font-extrabold text-black">
+              BİLETİNİ AL
+            </span>
+          </div>
         </div>
+      </a>
+    );
+  })}
+</div>
       </section>
 
       {/* ── HAKKIMIZDA ── */}
-      <section id="about" className="mx-auto max-w-6xl px-6 py-20">
+      <section id="about" className="mx-auto max-w-6xl px-4 sm:px-6 py-20">
         <h2 className="text-3xl font-bold">Hakkımızda</h2>
         <div className="mt-10 grid gap-12 md:grid-cols-2 items-center">
           <div className="text-zinc-800 leading-8 flex flex-col justify-center">
@@ -262,11 +288,11 @@ export default function Home() {
             </p>
             <p>Kısa ve uzun form doğaçlama gösterileri üretiyor; her oyunda seyirciyle birlikte, sıfırdan bir dünya kuruyoruz. Yazılı metin yok, tekrar yok, her şey anda.</p>
           </div>
-          <div className="grid grid-cols-2 gap-6 min-w-0">
-            <div className="relative w-full h-[360px] overflow-hidden rounded-3xl">
+          <div className="grid grid-cols-2 gap-4 sm:gap-6 min-w-0">
+            <div className="relative w-full h-[240px] sm:h-[360px] overflow-hidden rounded-3xl">
               <Image src="/aboutus2.png" alt="Gösteriden bir an" fill className="object-cover object-center" />
             </div>
-            <div className="relative w-full h-[360px] overflow-hidden rounded-3xl">
+            <div className="relative w-full h-[240px] sm:h-[360px] overflow-hidden rounded-3xl">
               <Image src="/aboutus3.png" alt="Seyirciyle etkileşim" fill className="object-cover object-center" />
             </div>
           </div>
@@ -274,9 +300,9 @@ export default function Home() {
       </section>
 
       {/* ── REELS ── */}
-      <section className="mx-auto max-w-6xl px-6 py-20">
+      <section className="mx-auto max-w-6xl px-4 sm:px-6 py-20">
         <h2 className="text-3xl font-bold mb-10">Sahneden</h2>
-        <div className="grid gap-6 sm:grid-cols-3">
+        <div className="grid gap-6 grid-cols-1 sm:grid-cols-3">
           {[
             "https://www.instagram.com/reel/DUQ5mS7DBgY/",
             "https://www.instagram.com/reel/DWdnHjoDILE/",
@@ -299,8 +325,8 @@ export default function Home() {
       <GallerySection />
 
       {/* ── EĞİTİM ── */}
-      <section id="education" className="mx-auto max-w-6xl px-6 py-20">
-        <div className="grid gap-16 md:grid-cols-2 items-center">
+      <section id="education" className="mx-auto max-w-6xl px-4 sm:px-6 py-20">
+        <div className="grid gap-10 md:gap-16 md:grid-cols-2 items-center">
           <div>
             <h2 className="text-3xl font-bold mb-6">Doğaçlama eğitimleri</h2>
             <p className="text-zinc-600 leading-8 mb-8">
@@ -316,16 +342,16 @@ export default function Home() {
               ))}
             </ul>
           </div>
-          <div className="relative w-full overflow-hidden rounded-3xl" style={{ aspectRatio: "4 / 3" }}>
+          <div className="relative w-full overflow-hidden rounded-3xl order-first md:order-last" style={{ aspectRatio: "4 / 3" }}>
             <Image src="/aboutus4.jpg" alt="Tiki Taka eğitim" fill className="object-cover" />
           </div>
         </div>
       </section>
 
       {/* ── KURUMSAL ── */}
-      <section id="corporate" className="mx-auto max-w-6xl px-6 py-20">
-        <div className="grid gap-16 md:grid-cols-2 items-center">
-          <div className="relative w-full overflow-hidden rounded-3xl order-last md:order-first" style={{ aspectRatio: "4 / 3" }}>
+      <section id="corporate" className="mx-auto max-w-6xl px-4 sm:px-6 py-20">
+        <div className="grid gap-10 md:gap-16 md:grid-cols-2 items-center">
+          <div className="relative w-full overflow-hidden rounded-3xl order-first md:order-first" style={{ aspectRatio: "4 / 3" }}>
             <Image src="/aboutus5.png" alt="Tiki Taka kurumsal" fill className="object-cover" />
           </div>
           <div>
@@ -347,9 +373,9 @@ export default function Home() {
       </section>
 
       {/* ── İLETİŞİM ── */}
-      <section id="contact" className="mx-auto max-w-6xl px-6 py-20">
+      <section id="contact" className="mx-auto max-w-6xl px-4 sm:px-6 py-20">
         <h2 className="text-3xl font-bold text-center">İletişim</h2>
-        <div className="flex flex-col items-center gap-16 mt-10">
+        <div className="flex flex-col items-center gap-10 mt-10">
           <div className="flex flex-col items-center gap-3 text-zinc-700">
             <p>
               Instagram:{" "}
@@ -364,11 +390,10 @@ export default function Home() {
               </a>
             </p>
           </div>
-
-        <p className="text-zinc-600 text-center max-w-xl">
+          <p className="text-zinc-600 text-center max-w-xl px-2">
             Bizimle iletişime geçmek, eğitimler ve kurumsal çalışmalar hakkında bilgi almak için formu doldurabilirsiniz.
           </p>
-        <form ref={formRef} onSubmit={handleSubmit} className="flex flex-col gap-4 w-full max-w-xl">
+          <form ref={formRef} onSubmit={handleSubmit} className="flex flex-col gap-4 w-full max-w-xl">
             <input
               name="from_name"
               type="text"
