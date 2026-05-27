@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import Script from "next/script";
+import Header from "@/components/Header";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -53,7 +54,11 @@ export default function RootLayout({
   return (
     <html lang="tr">
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
+        <Header />
         {children}
+        <footer className="border-t border-black/10 py-10 text-center text-sm text-zinc-600">
+          © {new Date().getFullYear()} TikiTaka Impro
+        </footer>
         <Script async src="https://www.instagram.com/embed.js" strategy="lazyOnload" />
       </body>
     </html>
