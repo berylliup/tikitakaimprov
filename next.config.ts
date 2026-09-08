@@ -1,7 +1,10 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  /* config options here */
+  // Ekip rehberi content/ altından okunur; Vercel build'ine dahil edilmesi için:
+  outputFileTracingIncludes: {
+    "/ekip/rehber": ["./content/**"],
+  },
 };
 
 export default nextConfig;

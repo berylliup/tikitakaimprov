@@ -36,6 +36,9 @@ yarn-error.log*
 # vercel
 .vercel
 
+# ekip alanı lokal veritabanı (sadece dev)
+/.data/
+
 # typescript
 *.tsbuildinfo
 next-env.d.ts
