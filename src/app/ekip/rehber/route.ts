@@ -15,13 +15,15 @@ export async function GET(req: NextRequest) {
   }
 
   const dir = path.join(process.cwd(), "content");
-  const [html, css, js] = await Promise.all([
+  const [html, ds, css, js] = await Promise.all([
     fs.readFile(path.join(dir, "rehber.html"), "utf8"),
+    fs.readFile(path.join(dir, "rehber-ds.css"), "utf8"),
     fs.readFile(path.join(dir, "rehber-extras.css"), "utf8"),
     fs.readFile(path.join(dir, "rehber-extras.js"), "utf8"),
   ]);
 
   const inject =
+    `<style>${ds}</style>` +
     `<style>${css}</style>` +
     `<script>window.__EKIP__=${JSON.stringify({ name: user.name })};</script>` +
     `<script>${js}</script>`;

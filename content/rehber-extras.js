@@ -141,16 +141,21 @@
     chip.innerHTML = "🎭 " + esc(ME) + ' &middot; <a href="/ekip">ekip alanı</a>';
     document.body.appendChild(chip);
 
+    function ciz() {
+      formats.forEach(function (f) {
+        renderFav(f.view, f.game);
+        renderComments(f.view, f.game);
+      });
+    }
+
+    // Veri gelmezse de arayüz boş haliyle çizilir, kutular boş kalmasın.
     api("/api/ekip/data")
       .then(function (data) {
         state.favs = data.favs || {};
         state.comments = data.comments || [];
-        formats.forEach(function (f) {
-          renderFav(f.view, f.game);
-          renderComments(f.view, f.game);
-        });
+        ciz();
       })
-      .catch(function () {});
+      .catch(ciz);
   }
 
   if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", init);

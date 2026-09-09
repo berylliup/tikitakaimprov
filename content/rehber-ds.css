@@ -1,0 +1,97 @@
+/* Rehberi marka sistemine cevirir — claude.ai/design projesindeki rehber-ds.css.
+   Rehber tek basina servis edildigi icin DS token'lari da burada tanimli. */
+@import url("https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Space+Grotesk:wght@500;600;700&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,700&family=DM+Mono:wght@400;500&display=swap");
+
+:root {
+  --tt-sari: #ffcb00;
+  --tt-sari-soluk: #f0dfa8;
+  --tt-sari-yanik: #6b4700;
+  --tt-siyah: #1c1b15;
+  --tt-komur: #3a3730;
+  --tt-duman: #6e6a5e;
+  --tt-sis: #a8a296;
+  --tt-cizgi: #e5e0d2;
+  --tt-beyaz: #ffffff;
+  --tt-kagit: #fbfaf5;
+  --tt-mor: #5a2350;
+  --text-on-dark: #f3f0e6;
+  --font-display: "Space Grotesk", "Helvetica Neue", Arial, sans-serif;
+  --font-body: "DM Sans", "Helvetica Neue", Arial, sans-serif;
+  --font-mono: "DM Mono", "SFMono-Regular", Consolas, monospace;
+  --weight-display: 700;
+  --fs-b1: 17px;
+  --lh-b1: 1.6;
+  --s3: 12px;
+}
+
+/* Kilavuzun kendi degiskenleri DS token'larina baglanir. */
+:root, :root:not([data-theme="light"]), :root[data-theme="dark"] {
+  --bg: var(--tt-kagit); --panel: var(--tt-beyaz); --panel-2: #f6f2e3;
+  --ink: var(--tt-siyah); --ink-2: var(--tt-komur); --muted: var(--tt-duman);
+  --line: var(--tt-cizgi); --line-2: var(--tt-siyah);
+  --gel-pink: var(--tt-sari-yanik); --gel-pink-soft: var(--tt-sari-soluk);
+  --gel-cyan: var(--tt-sari-yanik); --gel-cyan-soft: #f6f2e3;
+  --gel-amber: var(--tt-sari-yanik); --gel-amber-soft: var(--tt-sari-soluk);
+  --shadow: none; --r: 2px;
+  --f-disp: var(--font-display); --f-body: var(--font-body); --f-ui: var(--font-body); --f-mono: var(--font-mono);
+}
+
+body { font-family: var(--font-body); font-size: var(--fs-b1); line-height: var(--lh-b1); background: var(--tt-kagit); color: var(--tt-siyah); }
+h1, h2, h3 { font-family: var(--font-display); font-weight: var(--weight-display); }
+a { color: var(--tt-sari-yanik); }
+a:hover { color: var(--tt-siyah); }
+
+/* kenar cubugu */
+.app { grid-template-columns: 290px minmax(0, 1fr); }
+aside { background: var(--tt-siyah); border-right: 2px solid var(--tt-siyah); color: var(--text-on-dark); top: 53px; height: calc(100vh - 53px); }
+.brand { display: none; }
+.sbox { border-bottom: 1px solid #302d27; padding: 14px 16px; }
+.sbox input { background: #26241d; border: 2px solid var(--text-on-dark); border-radius: 2px; color: var(--text-on-dark); font-family: var(--font-body); }
+.sbox input:focus { outline: none; box-shadow: 3px 3px 0 var(--tt-sari); }
+nav { font-family: var(--font-body); }
+nav .home { background: #26241d; color: var(--text-on-dark); border-radius: 2px; font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; }
+nav .home.on { background: var(--tt-sari); color: var(--tt-siyah); }
+nav .grp { color: var(--tt-sis); font-family: var(--font-mono); letter-spacing: 0.14em; }
+nav .grp i { color: var(--tt-duman); }
+nav li a { color: var(--tt-sis); }
+nav li a b { color: var(--tt-duman); }
+nav li a.on { background: transparent; color: var(--tt-sari); font-weight: 600; box-shadow: inset 3px 0 0 var(--tt-sari); }
+nav li a.on b { color: var(--tt-sari); }
+@media (hover: hover) and (pointer: fine) {
+  nav li a:hover { background: #26241d; color: var(--tt-sari); }
+  nav .grp a:hover { color: var(--tt-sari); }
+  .kcard:hover, .fcard:hover, .pn a:hover { border-color: var(--tt-siyah); transform: translate(-2px, -2px); box-shadow: 4px 4px 0 var(--tt-siyah); }
+  .chip:hover { border-color: var(--tt-siyah); color: var(--tt-siyah); }
+  table.idx tr:hover td { background: var(--tt-sari-soluk); }
+  td.name a:hover, .crumb a:hover { color: var(--tt-sari-yanik); }
+}
+
+/* icerik */
+.eyebrow, .fmt-no { font-family: var(--font-mono); color: var(--tt-sari-yanik); letter-spacing: 0.16em; }
+.kcard, .fcard, .blk, .tool, .ornek, .spec, .pn a, .stats { border: 2px solid var(--tt-siyah); border-radius: 2px; box-shadow: none; }
+.kcard, .fcard, .pn a { transition: transform 120ms ease, box-shadow 120ms ease; }
+.stats { background: var(--tt-siyah); gap: 2px; }
+.spec { background: var(--tt-siyah); gap: 2px; }
+.stat .n.c1, .stat .n.c2 { color: var(--tt-sari-yanik); }
+.chip { border: 2px solid var(--tt-cizgi); border-radius: 2px; font-family: var(--font-body); }
+.chip[aria-pressed="true"], .chip.cy[aria-pressed="true"] { background: var(--tt-siyah); border-color: var(--tt-siyah); color: var(--tt-sari); }
+.badge { border-radius: 2px; font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; padding: 3px 7px; }
+.b-ok { background: var(--tt-sari); color: var(--tt-siyah); }
+.b-warn { background: var(--tt-sari-soluk); color: var(--tt-sari-yanik); }
+.b-hot { background: var(--tt-siyah); color: var(--tt-sari); }
+.b-mut { background: #f6f2e3; color: var(--tt-duman); }
+.md h2 { border-top: 2px solid var(--tt-siyah); font-size: 22px; }
+.md blockquote { border-left: 3px solid var(--tt-sari); background: #f6f2e3; border-radius: 0; }
+.md pre, .md code { border-radius: 2px; }
+.md pre { border: 2px solid var(--tt-siyah); }
+.steps li::before { border-radius: 2px; background: var(--tt-sari); color: var(--tt-siyah); }
+ol.flow li::before { border-radius: 2px; background: var(--tt-siyah); color: var(--tt-sari); }
+ol.flow .lb, .ornek h2 { color: var(--tt-sari-yanik); }
+.pair dt { color: var(--tt-sari-yanik); }
+.mob { border-bottom: 2px solid var(--tt-siyah); }
+.mob button { background: var(--tt-siyah); color: var(--tt-sari); border-radius: 2px; font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; }
+
+@media (max-width: 900px) {
+  aside { top: 0; height: 100vh; }
+  .app { grid-template-columns: 1fr; }
+}

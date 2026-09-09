@@ -1,39 +1,87 @@
-/* Ekip ekstraları: favori + yorumlar (rehberin kendi CSS değişkenlerini kullanır) */
-.ek-favbar{display:flex;align-items:center;gap:10px;margin:10px 0 4px;font-family:var(--f-ui)}
-.ek-fav{display:inline-flex;align-items:center;gap:7px;border:1px solid var(--line-2);
-  background:var(--panel);color:var(--ink-2);border-radius:999px;padding:7px 14px;
-  font-family:var(--f-ui);font-size:13.5px;font-weight:600;cursor:pointer;min-height:36px}
-.ek-fav:hover{border-color:var(--gel-pink)}
-.ek-fav .ek-heart{font-size:15px;line-height:1;color:var(--muted)}
-.ek-fav.on{background:var(--gel-pink-soft);border-color:var(--gel-pink);color:var(--gel-pink)}
-.ek-fav.on .ek-heart{color:var(--gel-pink)}
-.ek-fav-who{font-family:var(--f-ui);font-size:12.5px;color:var(--muted)}
+/* Ekip ekstraları: favori + yorumlar. Marka sistemine göre (rehber-ds.css sonrası yüklenir). */
 
-.ek-comments{margin-top:34px;border-top:1px solid var(--line);padding-top:22px}
-.ek-comments h2{font-family:var(--f-disp);font-size:19px;margin:0 0 4px}
-.ek-comments .ek-sub{font-family:var(--f-ui);font-size:12.5px;color:var(--muted);margin:0 0 14px}
-.ek-clist{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:10px}
-.ek-clist li{background:var(--panel);border:1px solid var(--line);border-radius:var(--r);
-  padding:12px 14px;box-shadow:var(--shadow)}
-.ek-chead{display:flex;align-items:baseline;gap:8px;font-family:var(--f-ui);margin-bottom:4px}
-.ek-cname{font-weight:700;font-size:13.5px;color:var(--ink)}
-.ek-ctime{font-size:11.5px;color:var(--muted)}
-.ek-cdel{margin-left:auto;border:0;background:none;color:var(--muted);cursor:pointer;
-  font-family:var(--f-ui);font-size:11.5px;text-decoration:underline;padding:2px}
-.ek-cdel:hover{color:var(--gel-pink)}
-.ek-ctext{font-size:15.5px;line-height:1.55;white-space:pre-wrap;overflow-wrap:break-word}
-.ek-cform{display:flex;flex-direction:column;gap:8px;margin-top:14px}
-.ek-cform textarea{background:var(--panel);border:1px solid var(--line-2);border-radius:var(--r);
-  color:var(--ink);font-family:var(--f-body);font-size:15.5px;line-height:1.5;
-  padding:10px 12px;min-height:70px;resize:vertical}
-.ek-cform textarea:focus{outline:2px solid var(--gel-pink);outline-offset:1px}
-.ek-cform .ek-crow{display:flex;justify-content:space-between;align-items:center;gap:10px}
-.ek-csend{border:1px solid var(--gel-cyan);background:var(--gel-cyan-soft);color:var(--gel-cyan);
-  border-radius:999px;padding:7px 18px;font-family:var(--f-ui);font-size:13.5px;font-weight:700;
-  cursor:pointer;min-height:36px}
-.ek-csend:disabled{opacity:.5;cursor:default}
-.ek-cempty{font-family:var(--f-ui);font-size:13.5px;color:var(--muted)}
-.ek-userchip{position:fixed;right:14px;bottom:14px;z-index:60;display:flex;align-items:center;gap:8px;
-  background:var(--panel);border:1px solid var(--line-2);border-radius:999px;box-shadow:var(--shadow);
-  padding:6px 12px;font-family:var(--f-ui);font-size:12.5px;color:var(--ink-2)}
-.ek-userchip a{color:var(--gel-cyan);text-decoration:none;font-weight:600}
+/* favori şeridi */
+.ek-favbar {
+  display: flex; flex-wrap: wrap; align-items: center; gap: 12px;
+  border: 2px solid var(--tt-siyah); border-radius: 2px;
+  background: var(--tt-sari-soluk); padding: 10px 14px; margin: 0 0 26px;
+}
+.ek-fav {
+  display: inline-flex; align-items: center; gap: 7px;
+  font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase;
+  border: 2px solid var(--tt-siyah); border-radius: 2px;
+  background: var(--tt-beyaz); color: var(--tt-siyah);
+  padding: 8px 12px; cursor: pointer; min-height: 36px;
+  transition: transform 120ms ease, box-shadow 120ms ease, background 120ms ease;
+}
+.ek-fav:hover { transform: translate(-2px, -2px); box-shadow: 3px 3px 0 var(--tt-siyah); }
+.ek-fav .ek-heart { font-size: 14px; line-height: 1; color: var(--tt-duman); }
+.ek-fav.on { background: var(--tt-sari); }
+.ek-fav.on .ek-heart { color: var(--tt-siyah); }
+.ek-fav-who {
+  font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.14em;
+  text-transform: uppercase; color: var(--tt-sari-yanik); margin-left: auto;
+}
+
+/* notlar */
+.ek-comments { border-top: 2px solid var(--tt-siyah); margin-top: 34px; padding-top: 16px; }
+.ek-comments h2 { font-family: var(--font-display); font-weight: 700; font-size: 20px; margin: 0 0 4px; }
+.ek-comments .ek-sub {
+  font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.14em;
+  text-transform: uppercase; color: var(--tt-duman); margin: 0 0 14px;
+}
+.ek-clist { list-style: none; margin: 0 0 16px; padding: 0; display: flex; flex-direction: column; gap: 10px; }
+.ek-clist li {
+  border: 2px solid var(--tt-siyah); border-radius: 2px;
+  background: var(--tt-beyaz); padding: 10px 14px; box-shadow: none; position: relative;
+}
+.ek-chead { display: flex; align-items: baseline; gap: 8px; margin-bottom: 4px; }
+.ek-cname {
+  font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.14em;
+  text-transform: uppercase; color: var(--tt-sari-yanik); font-weight: 500;
+}
+.ek-ctime { font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.12em; color: var(--tt-duman); }
+.ek-cdel {
+  margin-left: auto; border: 0; background: none; color: var(--tt-duman); cursor: pointer;
+  font-family: var(--font-mono); font-size: 12px; padding: 2px; text-decoration: none;
+}
+.ek-cdel:hover { color: var(--tt-mor); }
+.ek-ctext {
+  margin: 4px 0 0; font-family: var(--font-body); font-size: 15px; line-height: 1.55;
+  max-width: 62ch; white-space: pre-wrap; overflow-wrap: break-word; color: var(--tt-siyah);
+}
+.ek-cform { display: flex; gap: 10px; align-items: flex-start; flex-wrap: wrap; }
+.ek-cform textarea {
+  flex: 1 1 320px; min-height: 70px; resize: vertical;
+  font-family: var(--font-body); font-size: 15px; line-height: 1.5;
+  border: 2px solid var(--tt-siyah); border-radius: 2px;
+  background: var(--tt-beyaz); color: var(--tt-siyah); padding: 10px 12px; outline: none;
+}
+.ek-cform textarea:focus { box-shadow: 4px 4px 0 var(--tt-siyah); }
+.ek-cform .ek-crow { display: flex; justify-content: flex-end; align-items: center; gap: 10px; }
+.ek-csend {
+  font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase;
+  background: var(--tt-sari); border: 2px solid var(--tt-siyah); border-radius: 2px;
+  color: var(--tt-siyah); padding: 10px 14px; cursor: pointer; min-height: 36px;
+  box-shadow: 4px 4px 0 var(--tt-siyah);
+  transition: transform 120ms ease, box-shadow 120ms ease;
+}
+.ek-csend:hover:not(:disabled) { transform: translate(-2px, -2px); box-shadow: 6px 6px 0 var(--tt-siyah); }
+.ek-csend:disabled { opacity: 0.45; cursor: default; box-shadow: none; }
+.ek-cempty {
+  font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.14em;
+  text-transform: uppercase; color: var(--tt-duman);
+}
+
+/* sağ alt köşedeki kullanıcı rozeti */
+.ek-userchip {
+  position: fixed; right: 14px; bottom: 14px; z-index: 60;
+  display: flex; align-items: center; gap: 10px;
+  background: var(--tt-siyah); color: var(--tt-sari);
+  border: 2px solid var(--tt-siyah); border-radius: 2px;
+  box-shadow: 4px 4px 0 var(--tt-sari);
+  padding: 8px 12px;
+  font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase;
+}
+.ek-userchip a { color: var(--tt-sari); text-decoration: underline; }
+.ek-userchip a:hover { color: var(--tt-beyaz); }
