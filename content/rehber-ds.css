@@ -41,10 +41,14 @@ h1, h2, h3 { font-family: var(--font-display); font-weight: var(--weight-display
 a { color: var(--tt-sari-yanik); }
 a:hover { color: var(--tt-siyah); }
 
-/* kenar cubugu */
+/* kenar cubugu — rehber tek basina servis edildigi icin tam yukseklik */
 .app { grid-template-columns: 290px minmax(0, 1fr); }
-aside { background: var(--tt-siyah); border-right: 2px solid var(--tt-siyah); color: var(--text-on-dark); top: 53px; height: calc(100vh - 53px); }
-.brand { display: none; }
+aside { background: var(--tt-siyah); border-right: 2px solid var(--tt-siyah); color: var(--text-on-dark); top: 0; height: 100vh; height: 100dvh; }
+.brand { padding: 18px 16px 14px; border-bottom: 2px solid var(--tt-sari); }
+.brand a { color: var(--text-on-dark); }
+.brand .k { font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--tt-sari); font-weight: 500; }
+.brand .t { font-family: var(--font-display); font-weight: var(--weight-display); letter-spacing: -0.02em; color: var(--text-on-dark); }
+.brand a:hover .t { color: var(--tt-sari); }
 .sbox { border-bottom: 1px solid #302d27; padding: 14px 16px; }
 .sbox input { background: #26241d; border: 2px solid var(--text-on-dark); border-radius: 2px; color: var(--text-on-dark); font-family: var(--font-body); }
 .sbox input:focus { outline: none; box-shadow: 3px 3px 0 var(--tt-sari); }
