@@ -41,9 +41,33 @@ h1, h2, h3 { font-family: var(--font-display); font-weight: var(--weight-display
 a { color: var(--tt-sari-yanik); }
 a:hover { color: var(--tt-siyah); }
 
-/* kenar cubugu — rehber tek basina servis edildigi icin tam yukseklik */
+/* ekip ust bari — sayfanin tepesinde sabit durur */
+.ek-topbar {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 70; height: 53px;
+  background: var(--tt-siyah); color: var(--text-on-dark);
+  border-bottom: 2px solid var(--tt-sari);
+  display: flex; align-items: center; gap: 24px;
+  padding: 0 16px; box-sizing: border-box;
+}
+.ek-topbar img { height: 28px; width: auto; display: block; }
+.ek-topbar .lnk { display: flex; gap: 20px; margin-left: auto; flex-wrap: wrap; }
+.ek-topbar .lnk a {
+  font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase;
+  color: var(--tt-sis); text-decoration: none; border-bottom: 2px solid transparent; padding-bottom: 2px;
+}
+.ek-topbar .lnk a:hover { color: var(--tt-sari); }
+.ek-topbar .lnk a.on { color: #fff; border-bottom-color: var(--tt-sari); }
+.ek-topbar .kim {
+  font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase;
+  color: var(--tt-sari); display: flex; align-items: center; gap: 10px;
+}
+.ek-topbar .kim a { color: var(--tt-duman); text-decoration: underline; }
+.ek-topbar .kim a:hover { color: #fff; }
+body { padding-top: 53px; }
+
+/* kenar cubugu — ust barin altindan baslar */
 .app { grid-template-columns: 290px minmax(0, 1fr); }
-aside { background: var(--tt-siyah); border-right: 2px solid var(--tt-siyah); color: var(--text-on-dark); top: 0; height: 100vh; height: 100dvh; }
+aside { background: var(--tt-siyah); border-right: 2px solid var(--tt-siyah); color: var(--text-on-dark); top: 53px; height: calc(100vh - 53px); }
 .brand { padding: 18px 16px 14px; border-bottom: 2px solid var(--tt-sari); }
 .brand a { color: var(--text-on-dark); }
 .brand .k { font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--tt-sari); font-weight: 500; }
@@ -96,6 +120,13 @@ ol.flow .lb, .ornek h2 { color: var(--tt-sari-yanik); }
 .mob button { background: var(--tt-siyah); color: var(--tt-sari); border-radius: 2px; font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; }
 
 @media (max-width: 900px) {
-  aside { top: 0; height: 100vh; }
   .app { grid-template-columns: 1fr; }
+  .js aside { top: 53px; height: calc(100vh - 53px); }
+  .ek-topbar { gap: 12px; }
+  .ek-topbar .lnk { gap: 12px; }
+  .ek-topbar .lnk a { font-size: 10px; letter-spacing: 0.1em; }
+  .ek-topbar .kim { display: none; }
+}
+@media (max-width: 560px) {
+  .ek-topbar .lnk a.uzun { display: none; }
 }

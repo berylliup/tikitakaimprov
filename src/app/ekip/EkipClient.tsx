@@ -679,7 +679,12 @@ export default function EkipClient({
   members: string[];
 }) {
   const [user, setUser] = useState<User>(initialUser);
-  const [tab, setTab] = useState("panel");
+  // Rehberden "#havuz" gibi bir bağlantıyla gelinebilsin diye sekme hash'te tutulur.
+  const [tab, setTab] = useState(() => {
+    if (typeof window === "undefined") return "panel";
+    const h = window.location.hash.slice(1);
+    return ["panel", "havuz", "plan"].includes(h) ? h : "panel";
+  });
   const [data, setData] = useState<EkipData | null>(null);
   const [plan, setPlanState] = useState<Plan>({ perde: 1, acts: [[], []] });
   const [kayit, setKayit] = useState<"bekliyor" | "kaydedildi" | "hata">("kaydedildi");
@@ -702,6 +707,11 @@ export default function EkipClient({
   }, [user]);
 
   useEffect(() => () => { if (planZaman.current) clearTimeout(planZaman.current); }, []);
+
+  useEffect(() => {
+    if (!user) return;
+    history.replaceState(null, "", "#" + tab);
+  }, [tab, user]);
 
   // Plan ekipçe ortak; her değişiklik kısa bir gecikmeyle sunucuya yazılır.
   function planKaydet(p: Plan) {

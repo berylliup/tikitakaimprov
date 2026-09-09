@@ -8,6 +8,12 @@ import { getEkipUser } from "@/lib/ekip";
 
 export const dynamic = "force-dynamic";
 
+function escapeHtml(s: string): string {
+  return s.replace(/[&<>"']/g, (c) =>
+    ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[c] as string,
+  );
+}
+
 export async function GET(req: NextRequest) {
   const user = await getEkipUser();
   if (!user) {
@@ -28,9 +34,26 @@ export async function GET(req: NextRequest) {
     `<script>window.__EKIP__=${JSON.stringify({ name: user.name })};</script>` +
     `<script>${js}</script>`;
 
-  const out = html.includes("</body>")
-    ? html.replace("</body>", `${inject}</body>`)
-    : html + inject;
+  // Ekip alanının üst barı rehberde de dursun ki geri dönmek kolay olsun.
+  const topbar =
+    `<div class="ek-topbar">` +
+    `<a href="/ekip"><img src="/logo-negatif.png" alt="Tiki Taka Impro"></a>` +
+    `<span class="lnk">` +
+    `<a href="/ekip#panel">Panel</a>` +
+    `<a href="/ekip#havuz">Oyun Havuzu</a>` +
+    `<a class="uzun" href="/ekip#plan">Bugün Ne Oynayalım</a>` +
+    `<a class="on" href="/ekip/rehber">Rehber</a>` +
+    `</span>` +
+    `<span class="kim">${escapeHtml(user.name)}<a href="/ekip">Ekip alanı</a></span>` +
+    `</div>`;
+
+  const withBar = html.includes("<body>")
+    ? html.replace("<body>", `<body>${topbar}`)
+    : topbar + html;
+
+  const out = withBar.includes("</body>")
+    ? withBar.replace("</body>", `${inject}</body>`)
+    : withBar + inject;
 
   return new NextResponse(out, {
     headers: {

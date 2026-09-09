@@ -73,15 +73,5 @@
   text-transform: uppercase; color: var(--tt-duman);
 }
 
-/* sağ alt köşedeki kullanıcı rozeti */
-.ek-userchip {
-  position: fixed; right: 14px; bottom: 14px; z-index: 60;
-  display: flex; align-items: center; gap: 10px;
-  background: var(--tt-siyah); color: var(--tt-sari);
-  border: 2px solid var(--tt-siyah); border-radius: 2px;
-  box-shadow: 4px 4px 0 var(--tt-sari);
-  padding: 8px 12px;
-  font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase;
-}
-.ek-userchip a { color: var(--tt-sari); text-decoration: underline; }
-.ek-userchip a:hover { color: var(--tt-beyaz); }
+/* Kullanıcı ve ekip alanı bağlantısı artık üst barda; alttaki rozet gereksiz. */
+.ek-userchip { display: none; }
