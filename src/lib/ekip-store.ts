@@ -12,8 +12,31 @@ export type Comment = {
   ts: number;
 };
 
+export type HavuzOyun = {
+  id: string;
+  ad: string;
+  kisi: string;
+  aciklama: string;
+  form: "kisa" | "uzun";
+  ekleyen: string;
+  ts: number;
+};
+
+export type PlanOyun = {
+  id: string;
+  ad: string;
+  form: "kisa" | "uzun";
+  kisiler: string[];
+};
+// Gece planı ekipçe ortak: tek kayıt, son yazan kazanır.
+export type Plan = { perde: 1 | 2; acts: [PlanOyun[], PlanOyun[]] };
+
+export const BOS_PLAN: Plan = { perde: 1, acts: [[], []] };
+
 const FAVS_KEY = "ekip:favs"; // hash: "<game>|<name>" -> "1"
 const COMMENTS_KEY = "ekip:comments"; // hash: "<id>" -> JSON
+const HAVUZ_KEY = "ekip:havuz"; // hash: "<id>" -> JSON
+const PLAN_KEY = "ekip:plan"; // string: JSON
 
 // ---------- Redis (Upstash REST) ----------
 
@@ -45,14 +68,21 @@ function pairsToRecord(flat: string[]): Record<string, string> {
 
 // ---------- Lokal dosya (sadece dev) ----------
 
-type FileData = { favs: Record<string, string>; comments: Record<string, string> };
+type FileData = {
+  favs: Record<string, string>;
+  comments: Record<string, string>;
+  havuz?: Record<string, string>;
+  plan?: string;
+};
 const FILE = path.join(process.cwd(), ".data", "ekip.json");
 
 async function fileRead(): Promise<FileData> {
   try {
-    return JSON.parse(await fs.readFile(FILE, "utf8"));
+    const data = JSON.parse(await fs.readFile(FILE, "utf8")) as FileData;
+    data.havuz ||= {};
+    return data;
   } catch {
-    return { favs: {}, comments: {} };
+    return { favs: {}, comments: {}, havuz: {} };
   }
 }
 
@@ -123,6 +153,89 @@ export async function addComment(game: string, name: string, text: string): Prom
     await fileWrite(data);
   }
   return comment;
+}
+
+export async function getHavuz(): Promise<HavuzOyun[]> {
+  let fields: Record<string, string>;
+  if (redisEnv()) {
+    fields = pairsToRecord(((await redis(["HGETALL", HAVUZ_KEY])) as string[]) || []);
+  } else {
+    fields = (await fileRead()).havuz ?? {};
+  }
+  const out: HavuzOyun[] = [];
+  for (const [id, json] of Object.entries(fields)) {
+    try {
+      out.push({ ...(JSON.parse(json) as Omit<HavuzOyun, "id">), id });
+    } catch {
+      // bozuk kayıt atlanır
+    }
+  }
+  out.sort((a, b) => b.ts - a.ts);
+  return out;
+}
+
+export async function addHavuz(
+  oyun: Omit<HavuzOyun, "id" | "ts">,
+): Promise<HavuzOyun> {
+  const id = `${Date.now()}-${Math.random().toString(36).slice(2, 8)}`;
+  const kayit: HavuzOyun = { ...oyun, id, ts: Date.now() };
+  const { id: _drop, ...rest } = kayit;
+  void _drop;
+  const json = JSON.stringify(rest);
+  if (redisEnv()) {
+    await redis(["HSET", HAVUZ_KEY, id, json]);
+  } else {
+    const data = await fileRead();
+    (data.havuz ||= {})[id] = json;
+    await fileWrite(data);
+  }
+  return kayit;
+}
+
+export async function deleteHavuz(id: string, name: string): Promise<boolean> {
+  if (redisEnv()) {
+    const json = (await redis(["HGET", HAVUZ_KEY, id])) as string | null;
+    if (!json) return false;
+    if ((JSON.parse(json) as HavuzOyun).ekleyen !== name) return false;
+    await redis(["HDEL", HAVUZ_KEY, id]);
+    return true;
+  }
+  const data = await fileRead();
+  const json = (data.havuz ||= {})[id];
+  if (!json) return false;
+  if ((JSON.parse(json) as HavuzOyun).ekleyen !== name) return false;
+  delete data.havuz[id];
+  await fileWrite(data);
+  return true;
+}
+
+export async function getPlan(): Promise<Plan> {
+  let json: string | null;
+  if (redisEnv()) {
+    json = (await redis(["GET", PLAN_KEY])) as string | null;
+  } else {
+    json = (await fileRead()).plan ?? null;
+  }
+  if (!json) return BOS_PLAN;
+  try {
+    const p = JSON.parse(json) as Plan;
+    if (p.perde !== 1 && p.perde !== 2) return BOS_PLAN;
+    if (!Array.isArray(p.acts) || p.acts.length !== 2) return BOS_PLAN;
+    return p;
+  } catch {
+    return BOS_PLAN;
+  }
+}
+
+export async function setPlan(plan: Plan): Promise<void> {
+  const json = JSON.stringify(plan);
+  if (redisEnv()) {
+    await redis(["SET", PLAN_KEY, json]);
+  } else {
+    const data = await fileRead();
+    data.plan = json;
+    await fileWrite(data);
+  }
 }
 
 export async function deleteComment(id: string, name: string): Promise<boolean> {

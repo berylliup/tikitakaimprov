@@ -1,28 +1,19 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
 import Script from "next/script";
 import Header from "@/components/Header";
+import Footer from "@/components/Footer";
 import "./globals.css";
-
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
+import "./tt.css";
 
 export const metadata: Metadata = {
-  title: "TikiTaka Impro — Doğaçlama Tiyatro",
+  title: "TikiTaka Impro — Her an başka. Her an Tiki Taka.",
   description:
-    "Uzun form doğaçlama tiyatro kolektifi. Seyirciyle birlikte anında yazılan oyunlar. İstanbul Kadıköy'de her ay sahnedeyiz.",
+    "Kadıköy merkezli uzun form doğaçlama tiyatro kolektifi. Aylık gösteriler, eğitim programları, kurumsal atölyeler.",
   keywords: ["doğaçlama tiyatro", "impro", "tiyatro istanbul", "kadıköy tiyatro", "tikitaka"],
   openGraph: {
-    title: "TikiTaka Impro — Doğaçlama Tiyatro",
+    title: "TikiTaka Impro — Her an başka. Her an Tiki Taka.",
     description:
-      "Uzun form doğaçlama tiyatro kolektifi. Seyirciyle birlikte anında yazılan oyunlar.",
+      "Kadıköy merkezli uzun form doğaçlama tiyatro kolektifi. Aylık gösteriler, eğitim programları, kurumsal atölyeler.",
     url: "https://tikitakaimprov.com",
     siteName: "TikiTaka Impro",
     images: [
@@ -38,9 +29,9 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "TikiTaka Impro — Doğaçlama Tiyatro",
+    title: "TikiTaka Impro — Her an başka. Her an Tiki Taka.",
     description:
-      "Uzun form doğaçlama tiyatro kolektifi. Seyirciyle birlikte anında yazılan oyunlar.",
+      "Kadıköy merkezli uzun form doğaçlama tiyatro kolektifi. Aylık gösteriler, eğitim programları, kurumsal atölyeler.",
     images: ["https://tikitakaimprov.com/group.jpeg"],
   },
   metadataBase: new URL("https://tikitakaimprov.com"),
@@ -53,12 +44,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="tr">
-      <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
+      <body className="tt antialiased">
         <Header />
         {children}
-        <footer className="border-t border-black/10 py-10 text-center text-sm text-zinc-600">
-          © {new Date().getFullYear()} TikiTaka Impro
-        </footer>
+        <Footer />
         <Script async src="https://www.instagram.com/embed.js" strategy="lazyOnload" />
       </body>
     </html>
