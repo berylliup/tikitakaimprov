@@ -27,11 +27,26 @@ export type PlanOyun = {
   ad: string;
   form: "kisa" | "uzun";
   kisiler: string[];
+  // Tiyatro sporu modunda kısa form oyunlar iki tarafa bölünür.
+  tiki?: string[];
+  taka?: string[];
 };
+// Gecenin iki takımı; aynı kişi iki takımda birden olabilir.
+export type Ekipler = { tiki: string[]; taka: string[] };
 // Gece planı ekipçe ortak: tek kayıt, son yazan kazanır.
-export type Plan = { perde: 1 | 2; acts: [PlanOyun[], PlanOyun[]] };
+export type Plan = {
+  perde: 1 | 2;
+  acts: [PlanOyun[], PlanOyun[]];
+  spor: boolean;
+  ekipler: Ekipler;
+};
 
-export const BOS_PLAN: Plan = { perde: 1, acts: [[], []] };
+export const BOS_PLAN: Plan = {
+  perde: 1,
+  acts: [[], []],
+  spor: false,
+  ekipler: { tiki: [], taka: [] },
+};
 
 const FAVS_KEY = "ekip:favs"; // hash: "<game>|<name>" -> "1"
 const COMMENTS_KEY = "ekip:comments"; // hash: "<id>" -> JSON
@@ -221,7 +236,15 @@ export async function getPlan(): Promise<Plan> {
     const p = JSON.parse(json) as Plan;
     if (p.perde !== 1 && p.perde !== 2) return BOS_PLAN;
     if (!Array.isArray(p.acts) || p.acts.length !== 2) return BOS_PLAN;
-    return p;
+    // Eski kayitlarda spor/ekipler alanlari yok.
+    return {
+      ...p,
+      spor: p.spor === true,
+      ekipler: {
+        tiki: Array.isArray(p.ekipler?.tiki) ? p.ekipler.tiki : [],
+        taka: Array.isArray(p.ekipler?.taka) ? p.ekipler.taka : [],
+      },
+    };
   } catch {
     return BOS_PLAN;
   }

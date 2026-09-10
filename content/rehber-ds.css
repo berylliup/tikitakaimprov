@@ -127,6 +127,16 @@ ol.flow .lb, .ornek h2 { color: var(--tt-sari-yanik); }
   .ek-topbar .lnk a { font-size: 10px; letter-spacing: 0.1em; }
   .ek-topbar .kim { display: none; }
 }
-@media (max-width: 560px) {
-  .ek-topbar .lnk a.uzun { display: none; }
+@media (max-width: 760px) {
+  /* mobilde ust bar tek satir: kisa etiketler, sarma yok */
+  .ek-topbar { gap: 8px; padding: 0 10px; }
+  .ek-topbar img { height: 24px; }
+  .ek-topbar .lnk { flex-wrap: nowrap; gap: 11px; overflow-x: auto; scrollbar-width: none; -ms-overflow-style: none; min-width: 0; }
+  .ek-topbar .lnk::-webkit-scrollbar { display: none; }
+  .ek-topbar .lnk a { font-size: 9.5px; letter-spacing: 0.04em; white-space: nowrap; }
+  .ek-topbar .tam { display: none; }
+}
+.ek-topbar .kisa { display: none; }
+@media (max-width: 760px) {
+  .ek-topbar .kisa { display: inline; }
 }

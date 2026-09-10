@@ -89,6 +89,13 @@
 }
 
 /* --- site katmani --- */
+/* Egik marquee gibi dondurulmus/negatif marjli ogeler sayfayi saga tasiriyordu:
+   yatay tasmayi kesiyoruz (clip, sticky basligi bozmaz), dikey scroll aynen kaliyor. */
+html, body {
+  max-width: 100%;
+  overflow-x: clip;
+}
+html { background: var(--bg); }
 body {
   margin: 0;
   background: var(--bg);
@@ -152,6 +159,7 @@ body {
   border-bottom: 2px solid transparent; padding-bottom: 3px;
   transition: color 120ms ease, border-color 120ms ease;
 }
+.nav-short { display: none; }
 .nav a:hover { color: var(--text-body); border-bottom-color: var(--tt-sari); }
 .nav a.on { color: var(--text-body); border-bottom-color: var(--tt-sari); }
 .hdr::after {
@@ -373,9 +381,20 @@ body {
   .sec-sm { padding: var(--s6) 0; }
   .hero-in { padding: var(--s7) var(--s5); gap: var(--s6); }
   .mq-tr { font-size: 20px; }
-  .hdr-in { flex-wrap: wrap; gap: var(--s3) var(--s4); padding: 10px var(--s4); }
-  .nav { order: 3; width: 100%; margin-left: 0; gap: var(--s4); row-gap: var(--s2); }
-  .nav a { font-size: 10px; letter-spacing: var(--ls-label-tight); }
+  /* mobilde her sey tek satirda: logo solda, menu ortada, Bilet Al en sagda */
+  .hdr-in { flex-wrap: nowrap; gap: 8px; padding: 9px 10px; }
+  .hdr-in > a:first-child { flex: 0 0 auto; }
+  .hdr-in > a:first-child img { height: 25px !important; }
+  .nav {
+    order: 0; width: auto; min-width: 0; margin-left: auto;
+    flex-wrap: nowrap; gap: 8px; overflow-x: auto;
+    scrollbar-width: none; -ms-overflow-style: none;
+  }
+  .nav::-webkit-scrollbar { display: none; }
+  .nav a { font-size: 9.5px; letter-spacing: 0; white-space: nowrap; padding-bottom: 2px; }
+  .nav-full { display: none; }
+  .nav-short { display: inline; }
+  .hdr .btn-sm { flex: 0 0 auto; font-size: 11px; padding: 7px 9px; box-shadow: 3px 3px 0 var(--tt-siyah); }
   .wrap { padding: 0 var(--s4); }
   .ft-in { grid-template-columns: 1fr; gap: var(--s6); padding: var(--s7) var(--s4); }
   .plate { padding: var(--s4); }

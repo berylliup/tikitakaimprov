@@ -40,8 +40,8 @@ export async function GET(req: NextRequest) {
     `<a href="/ekip"><img src="/logo-negatif.png" alt="Tiki Taka Impro"></a>` +
     `<span class="lnk">` +
     `<a href="/ekip#panel">Panel</a>` +
-    `<a href="/ekip#havuz">Oyun Havuzu</a>` +
-    `<a class="uzun" href="/ekip#plan">Bugün Ne Oynayalım</a>` +
+    `<a href="/ekip#havuz"><span class="tam">Oyun Havuzu</span><span class="kisa">Havuz</span></a>` +
+    `<a href="/ekip#plan"><span class="tam">Bugün Ne Oynayalım</span><span class="kisa">Plan</span></a>` +
     `<a class="on" href="/ekip/rehber">Rehber</a>` +
     `</span>` +
     `<span class="kim">${escapeHtml(user.name)}<a href="/ekip">Ekip alanı</a></span>` +

@@ -17,8 +17,20 @@ type HavuzOyun = {
   ekleyen: string;
   ts: number;
 };
-type PlanOyun = { id: string; ad: string; form: "kisa" | "uzun"; kisiler: string[] };
-type Plan = { perde: 1 | 2; acts: [PlanOyun[], PlanOyun[]] };
+type PlanOyun = {
+  id: string;
+  ad: string;
+  form: "kisa" | "uzun";
+  kisiler: string[];
+  tiki?: string[];
+  taka?: string[];
+};
+type Taraf = "tiki" | "taka";
+type Ekipler = { tiki: string[]; taka: string[] };
+type Plan = { perde: 1 | 2; acts: [PlanOyun[], PlanOyun[]]; spor: boolean; ekipler: Ekipler };
+
+const TARAFLAR: [Taraf, string][] = [["tiki", "Tiki"], ["taka", "Taka"]];
+const BOS_PLAN: Plan = { perde: 1, acts: [[], []], spor: false, ekipler: { tiki: [], taka: [] } };
 type EkipData = {
   user: { name: string };
   members: string[];
@@ -131,10 +143,11 @@ function EkipHeader({
   setTab: (t: string) => void;
   onLogout: () => void;
 }) {
-  const tabs: [string, string][] = [
-    ["panel", "Panel"],
-    ["havuz", "Oyun Havuzu"],
-    ["plan", "Bugün Ne Oynayalım"],
+  // [anahtar, tam etiket, mobil etiket] — mobilde hepsi tek satira sigsin.
+  const tabs: [string, string, string][] = [
+    ["panel", "Panel", "Panel"],
+    ["havuz", "Oyun Havuzu", "Havuz"],
+    ["plan", "Bugün Ne Oynayalım", "Plan"],
   ];
   return (
     <header className="ek-hdr">
@@ -143,8 +156,11 @@ function EkipHeader({
           <Image src="/logo-negatif.png" alt="Tiki Taka Impro" width={39} height={30} unoptimized style={{ height: 30, width: "auto" }} />
         </Link>
         <div className="ek-tabs">
-          {tabs.map(([k, t]) => (
-            <button key={k} className={tab === k ? "on" : ""} onClick={() => setTab(k)}>{t}</button>
+          {tabs.map(([k, t, kisa]) => (
+            <button key={k} className={tab === k ? "on" : ""} onClick={() => setTab(k)}>
+              <span className="nav-full">{t}</span>
+              <span className="nav-short">{kisa}</span>
+            </button>
           ))}
           <a href="/ekip/rehber">Rehber</a>
         </div>
@@ -461,15 +477,22 @@ function Secici({
   );
 }
 
-/* ── oyuna kişi ekleme ── */
+/* ── oyuna / takıma kişi ekleme ── */
 function KisiEkle({
   secili,
-  members,
+  kaynak,
   onEkle,
+  hepsiEtiket = "Herkes",
+  onHepsi,
+  bosMesaj,
 }: {
   secili: string[];
-  members: string[];
+  // Seçilebilecek isimler: normalde tüm ekip, tiyatro sporunda o takımın kadrosu.
+  kaynak: string[];
   onEkle: (n: string) => void;
+  hepsiEtiket?: string | null;
+  onHepsi?: () => void;
+  bosMesaj?: string;
 }) {
   const [acik, setAcik] = useState(false);
   const ref = useRef<HTMLSpanElement>(null);
@@ -483,7 +506,7 @@ function KisiEkle({
     return () => document.removeEventListener("mousedown", h);
   }, [acik]);
 
-  const kalan = members.filter((n) => !secili.includes(n));
+  const kalan = kaynak.filter((n) => !secili.includes(n));
   if (secili.includes("Herkes")) return null;
 
   return (
@@ -491,16 +514,49 @@ function KisiEkle({
       <button className="kisi-ekle" onClick={() => setAcik(!acik)}>+ kişi</button>
       {acik ? (
         <span className="kisi-menu">
-          <button className="hepsi-op" onClick={() => { onEkle("Herkes"); setAcik(false); }}>Herkes</button>
+          {kaynak.length === 0 ? (
+            <button disabled style={{ color: "var(--text-2)" }}>{bosMesaj || "Seçilecek kimse yok"}</button>
+          ) : null}
+          {hepsiEtiket && kaynak.length > 0 ? (
+            <button
+              className="hepsi-op"
+              onClick={() => { (onHepsi ?? (() => onEkle("Herkes")))(); setAcik(false); }}
+            >
+              {hepsiEtiket}
+            </button>
+          ) : null}
           {kalan.map((n) => (
             <button key={n} onClick={() => { onEkle(n); setAcik(false); }}>{n}</button>
           ))}
-          {kalan.length === 0 ? (
+          {kaynak.length > 0 && kalan.length === 0 ? (
             <button disabled style={{ color: "var(--text-2)" }}>Herkes eklendi</button>
           ) : null}
         </span>
       ) : null}
     </span>
+  );
+}
+
+/* ── kişi rozetleri (oyunda ve takım kadrosunda ortak) ── */
+function KisiSatiri({
+  isimler,
+  onCikar,
+  children,
+}: {
+  isimler: string[];
+  onCikar: (n: string) => void;
+  children?: React.ReactNode;
+}) {
+  return (
+    <div className="kisiler">
+      {isimler.map((n) => (
+        <span key={n} className={"kisi-chip" + (n === "Herkes" ? " hepsi" : "")}>
+          {n}
+          <button title="Çıkar" onClick={() => onCikar(n)}>×</button>
+        </span>
+      ))}
+      {children}
+    </div>
   );
 }
 
@@ -527,10 +583,13 @@ function PlanEkrani({
 
   function perdeSec(n: 1 | 2) {
     if (n === 1 && plan.acts[1].length) {
-      setPlan({ perde: 1, acts: [[...plan.acts[0], ...plan.acts[1]], []] });
+      setPlan({ ...plan, perde: 1, acts: [[...plan.acts[0], ...plan.acts[1]], []] });
     } else {
       setPlan({ ...plan, perde: n });
     }
+  }
+  function ekipGuncelle(t: Taraf, isimler: string[]) {
+    setPlan({ ...plan, ekipler: { ...plan.ekipler, [t]: isimler } });
   }
   function ekleOyun(a: number, o: { ad: string; form: "kisa" | "uzun" }) {
     const acts: [PlanOyun[], PlanOyun[]] = [plan.acts[0].slice(), plan.acts[1].slice()];
@@ -575,13 +634,58 @@ function PlanEkrani({
           <button className={plan.perde === 1 ? "on" : ""} onClick={() => perdeSec(1)}>Tek perde</button>
           <button className={plan.perde === 2 ? "on" : ""} onClick={() => perdeSec(2)}>İki perde</button>
         </div>
-        <button className="btn btn-sm btn-ghost" onClick={() => setPlan({ perde: plan.perde, acts: [[], []] })}>
+        <button className="btn btn-sm btn-ghost" onClick={() => setPlan({ ...plan, acts: [[], []] })}>
           Sırayı temizle
         </button>
         <span className="mono" style={{ color: kayit === "hata" ? "var(--accent)" : "var(--text-2)" }}>
           {kayit === "bekliyor" ? "Kaydediliyor…" : kayit === "hata" ? "Kaydedilemedi" : "Ekiple ortak"}
         </span>
       </Head>
+
+      {/* gecenin kadrosu · tiyatro sporu iki takıma bölünür */}
+      <div className="ek-card kadro">
+        <div className="ek-card-top">
+          <span>Gecenin kadrosu</span>
+          <label className="spor-tik">
+            <input
+              type="checkbox"
+              checked={plan.spor}
+              onChange={(e) => setPlan({ ...plan, spor: e.target.checked })}
+            />
+            Tiyatro sporu
+          </label>
+        </div>
+        {plan.spor ? (
+          <div className="ek-card-body kadro-body">
+            <div className="takimlar">
+              {TARAFLAR.map(([t, ad]) => (
+                <div className="takim" key={t}>
+                  <div className="takim-top">
+                    <span className={"taraf-et " + t}>{ad}</span>
+                    <span className="mono">{plan.ekipler[t].length} kişi</span>
+                  </div>
+                  <KisiSatiri
+                    isimler={plan.ekipler[t]}
+                    onCikar={(n) => ekipGuncelle(t, plan.ekipler[t].filter((x) => x !== n))}
+                  >
+                    <KisiEkle
+                      secili={plan.ekipler[t]}
+                      kaynak={members}
+                      onEkle={(n) => ekipGuncelle(t, [...plan.ekipler[t], n])}
+                      hepsiEtiket="Tüm ekip"
+                      onHepsi={() => ekipGuncelle(t, members.slice())}
+                    />
+                  </KisiSatiri>
+                </div>
+              ))}
+            </div>
+            <p className="b2">
+              Aynı kişi iki takımda birden olabilir. Kısa form oyunlar sırada Tiki ve Taka
+              olarak ikiye bölünür; her tarafın oyuncusunu o takımın kadrosundan seçersin.
+            </p>
+          </div>
+        ) : null}
+      </div>
 
       <div className="stack" style={{ gap: "var(--s5)" }}>
         {perdeler.map((a) => (
@@ -627,26 +731,49 @@ function PlanEkrani({
                           {it.form === "uzun" ? "uzun" : "kısa"}
                         </span>
                       </div>
-                      <div className="kisiler">
-                        {it.kisiler.map((n) => (
-                          <span key={n} className={"kisi-chip" + (n === "Herkes" ? " hepsi" : "")}>
-                            {n}
-                            <button
-                              title="Çıkar"
-                              onClick={() => guncelle(a, i, { kisiler: it.kisiler.filter((x) => x !== n) })}
-                            >
-                              ×
-                            </button>
-                          </span>
-                        ))}
-                        <KisiEkle
-                          secili={it.kisiler}
-                          members={members}
-                          onEkle={(n) =>
-                            guncelle(a, i, { kisiler: n === "Herkes" ? ["Herkes"] : [...it.kisiler, n] })
+                      {plan.spor && it.form === "kisa" ? (
+                        // Tiyatro sporu: kısa form oyun iki tarafa bölünür.
+                        <div className="taraflar">
+                          {TARAFLAR.map(([t, ad]) => {
+                            const secili = it[t] ?? [];
+                            return (
+                              <div className="taraf" key={t}>
+                                <span className={"taraf-et " + t}>{ad}</span>
+                                <KisiSatiri
+                                  isimler={secili}
+                                  onCikar={(n) =>
+                                    guncelle(a, i, { [t]: secili.filter((x) => x !== n) })
+                                  }
+                                >
+                                  <KisiEkle
+                                    secili={secili}
+                                    kaynak={plan.ekipler[t]}
+                                    onEkle={(n) => guncelle(a, i, { [t]: [...secili, n] })}
+                                    hepsiEtiket="Tüm takım"
+                                    onHepsi={() => guncelle(a, i, { [t]: plan.ekipler[t].slice() })}
+                                    bosMesaj={"Önce " + ad + " kadrosunu seç"}
+                                  />
+                                </KisiSatiri>
+                              </div>
+                            );
+                          })}
+                        </div>
+                      ) : (
+                        <KisiSatiri
+                          isimler={it.kisiler}
+                          onCikar={(n) =>
+                            guncelle(a, i, { kisiler: it.kisiler.filter((x) => x !== n) })
                           }
-                        />
-                      </div>
+                        >
+                          <KisiEkle
+                            secili={it.kisiler}
+                            kaynak={members}
+                            onEkle={(n) =>
+                              guncelle(a, i, { kisiler: n === "Herkes" ? ["Herkes"] : [...it.kisiler, n] })
+                            }
+                          />
+                        </KisiSatiri>
+                      )}
                     </div>
                     <button className="cikar" title="Sıradan çıkar" onClick={() => cikar(a, i)}>×</button>
                   </div>
@@ -686,7 +813,7 @@ export default function EkipClient({
     return ["panel", "havuz", "plan"].includes(h) ? h : "panel";
   });
   const [data, setData] = useState<EkipData | null>(null);
-  const [plan, setPlanState] = useState<Plan>({ perde: 1, acts: [[], []] });
+  const [plan, setPlanState] = useState<Plan>(BOS_PLAN);
   const [kayit, setKayit] = useState<"bekliyor" | "kaydedildi" | "hata">("kaydedildi");
   const planKuyruk = useRef<Plan | null>(null);
   const planZaman = useRef<ReturnType<typeof setTimeout> | null>(null);
@@ -700,7 +827,13 @@ export default function EkipClient({
         if (iptal || !d) return;
         setData(d);
         // Sunucudaki plan yalnızca kullanıcı henüz bir şey değiştirmediyse alınır.
-        if (!planKuyruk.current && d.plan) setPlanState(d.plan);
+        if (!planKuyruk.current && d.plan) {
+          setPlanState({
+            ...BOS_PLAN,
+            ...d.plan,
+            ekipler: { ...BOS_PLAN.ekipler, ...(d.plan.ekipler ?? {}) },
+          });
+        }
       })
       .catch(() => {});
     return () => { iptal = true; };

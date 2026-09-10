@@ -97,6 +97,26 @@ a.ek-card:hover, button.ek-card:hover { transform: translate(-2px, -2px); box-sh
 .kisi-menu .hepsi-op { font-family: var(--font-mono); font-size: var(--fs-label); letter-spacing: var(--ls-label); text-transform: uppercase; border-bottom: 1px solid var(--line); }
 .ara-bant { background: var(--tt-sari); border: var(--border); border-radius: var(--radius); padding: 10px var(--s4); text-align: center; font-family: var(--font-accent); font-weight: var(--weight-accent); letter-spacing: var(--ls-accent); font-size: 22px; color: var(--tt-siyah); }
 
+/* gecenin kadrosu · tiyatro sporu */
+.kadro { margin-bottom: var(--s5); }
+.spor-tik { display: inline-flex; align-items: center; gap: var(--s2); cursor: pointer; color: var(--tt-sari); user-select: none; }
+.spor-tik input { appearance: none; width: 16px; height: 16px; margin: 0; flex: 0 0 16px; border: 2px solid var(--tt-sari); border-radius: var(--radius); background: transparent; cursor: pointer; position: relative; }
+.spor-tik input:checked { background: var(--tt-sari); }
+.spor-tik input:checked::after { content: "✓"; position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 700; color: var(--tt-siyah); }
+.kadro-body { gap: var(--s4); }
+.takimlar { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--s4); }
+.takim { border: var(--border); border-radius: var(--radius); background: var(--bg); padding: var(--s3) var(--s4); display: flex; flex-direction: column; gap: var(--s2); }
+.takim-top { display: flex; align-items: center; justify-content: space-between; gap: var(--s3); }
+.takim-top .mono { color: var(--text-2); }
+.takim .kisiler { margin-top: 0; }
+.taraf-et { font-family: var(--font-accent); font-weight: var(--weight-accent); letter-spacing: var(--ls-accent); font-size: 17px; text-transform: uppercase; border: 2px solid var(--tt-siyah); border-radius: var(--radius); padding: 1px 8px; line-height: 1.25; }
+.taraf-et.tiki { background: var(--tt-sari); color: var(--tt-siyah); }
+.taraf-et.taka { background: var(--tt-mor); color: #f6e8f4; }
+/* sirada bolunmus kisa form */
+.taraflar { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--s3); margin-top: var(--s3); }
+.taraflar .taraf { display: flex; flex-direction: column; gap: 5px; align-items: flex-start; border-left: 3px solid var(--line); padding-left: var(--s3); }
+.taraflar .taraf .kisiler { margin-top: 0; }
+
 /* oyun seçici */
 .secici { position: fixed; inset: 0; z-index: 60; background: rgba(28, 27, 21, 0.72); display: flex; align-items: flex-start; justify-content: center; padding: var(--s7) var(--s4); }
 .secici-kutu { background: var(--surface); border: var(--border); border-radius: var(--radius); box-shadow: var(--block-shadow); width: min(680px, 100%); max-height: 82vh; display: flex; flex-direction: column; }
@@ -120,9 +140,48 @@ a.ek-card:hover, button.ek-card:hover { transform: translate(-2px, -2px); box-sh
 }
 @media (max-width: 760px) {
   .arsiv-grid, .secim-liste { grid-template-columns: minmax(0, 1fr); }
-  .sira { grid-template-columns: auto 1fr auto; }
-  .sira .no { display: none; }
-  .ek-hdr-in { padding: 10px var(--s4); }
-  .ek-tabs { order: 3; width: 100%; margin-left: 0; gap: var(--s4); }
   .ara-input { min-width: 0; width: 100%; }
+
+  /* ust bar tek satir: logo · sekmeler · kullanici */
+  .ek-hdr-in { flex-wrap: nowrap; gap: 8px; padding: 8px 10px; }
+  .ek-hdr-in > a:first-child { flex: 0 0 auto; }
+  .ek-hdr-in > a:first-child img { height: 24px !important; }
+  .ek-tabs {
+    order: 0; width: auto; min-width: 0; margin-left: auto; flex-wrap: nowrap; gap: 10px;
+    overflow-x: auto; scrollbar-width: none; -ms-overflow-style: none;
+  }
+  .ek-tabs::-webkit-scrollbar { display: none; }
+  .ek-tabs button, .ek-tabs a { font-size: 9px; letter-spacing: 0.04em; white-space: nowrap; }
+  .ek-user { flex: 0 0 auto; font-size: 9px; letter-spacing: 0.04em; gap: 6px; }
+
+  /* plan ekrani mobilde kompakt: tum gece tek ekranda gorunsun */
+  .sira { grid-template-columns: auto 1fr auto; gap: var(--s2); padding: var(--s2) var(--s3); }
+  .sira .no { display: none; }
+  .sira .ad { font-size: 16px; gap: var(--s2); }
+  .sira .tut { font-size: 14px; line-height: 1.2; }
+  .sira .form-et { font-size: 8.5px; padding: 1px 4px; border-width: 1px; }
+  .perde-list { padding: var(--s3); gap: var(--s2); }
+  .kisiler { gap: 4px; margin-top: 5px; }
+  .kisi-chip, .kisi-ekle { font-size: 9px; letter-spacing: 0.04em; padding: 2px 6px; border-width: 1px; gap: 4px; }
+  .kisi-menu { min-width: 132px; }
+  .kisi-menu button { font-size: 13px; padding: 6px 9px; }
+  /* mobilde taraf etiketi solda, oyuncular yaninda: iki satirda biter */
+  .taraflar { display: flex; flex-direction: column; gap: 4px; margin-top: 5px; }
+  .taraflar .taraf { flex-direction: row; align-items: flex-start; gap: 6px; border-left: none; padding-left: 0; }
+  .taraflar .taraf > .kisiler { flex: 1; }
+  .taraf-et { font-size: 12px; padding: 0 5px; border-width: 1px; }
+  .takimlar { grid-template-columns: minmax(0, 1fr); gap: var(--s3); }
+  .takim { padding: var(--s2) var(--s3); }
+  .ara-bant { font-size: 16px; padding: 6px var(--s3); }
+  .perde-top { padding: 6px var(--s3); }
+  .ek-main { padding: var(--s5) 0 var(--s7); }
+  .ek-main .stack-lg { gap: var(--s5); }
+  .ek-head { margin-bottom: var(--s4); gap: var(--s3); padding-top: var(--s3); }
+  .ek-head h2 { font-size: 26px; }
+  .ek-head .row { gap: var(--s3); }
+  .segmented button { padding: 7px 11px; font-size: 9.5px; letter-spacing: 0.08em; }
+  .kadro { margin-bottom: 0; }
+  .kadro .ek-card-top { padding: 7px var(--s3); }
+  .kadro-body { padding: var(--s3); gap: var(--s3); }
+  .kadro-body .b2 { font-size: 12px; line-height: 1.45; }
 }

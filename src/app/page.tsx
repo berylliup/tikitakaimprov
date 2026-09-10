@@ -22,14 +22,14 @@ const SHOWS = [
   },
 ];
 
-const PLAYERS: [string, string][] = [
-  ["Arzu", "Sahneye atlayan ilk kişi"],
-  ["Baransel", "Az konuşur, sonra bir cümleyle bitirir"],
-  ["Beril", "Tuhaf fikirlerin kaynağı"],
-  ["Hikmet", "Aynı sahnede üç karakter"],
-  ["Sedat", "Ağlatır, sonra güldürür"],
-  ["Tolga", "Sahnenin temposu"],
-  ["Veyis", "Son sözü o söyler"],
+const PLAYERS = [
+  "Arzu",
+  "Baransel",
+  "Beril",
+  "Hikmet",
+  "Sedat",
+  "Tolga",
+  "Veyis",
 ];
 
 export default function Home() {
@@ -115,12 +115,11 @@ export default function Home() {
         <Wrap className="stack">
           <SectionHead kicker="Ekip" title="Yedi kişi, tek grup zihni" />
           <div className="grid g4">
-            {PLAYERS.map(([ad, not], i) => (
+            {PLAYERS.map((ad, i) => (
               <div key={ad} className="stack" style={{ gap: "var(--s3)" }}>
                 <PhotoBox slot={`oyuncu-${i}`} alt={ad} ratio="1 / 1" tilt={i % 2 ? "tilt-alt" : "tilt"} />
                 <div>
                   <h3 style={{ fontSize: "var(--fs-d3)", lineHeight: "var(--lh-d3)" }}>{ad}</h3>
-                  <p className="b2">{not}</p>
                 </div>
               </div>
             ))}

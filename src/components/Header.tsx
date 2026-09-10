@@ -6,12 +6,13 @@ import { usePathname } from "next/navigation";
 
 const TICKET_URL = "https://biletinial.com/tr-tr/tiyatro/tiki-taka-dogaclama-tiyatro";
 
+// short: mobilde tek satira sigsin diye kisa etiket.
 const NAV_LINKS = [
-  { href: "/", label: "Gösteriler" },
-  { href: "/hakkimizda", label: "Hakkımızda" },
-  { href: "/egitim", label: "Eğitim" },
-  { href: "/kurumsal", label: "Kurumsal" },
-  { href: "/iletisim", label: "İletişim" },
+  { href: "/", label: "Gösteriler", short: "Oyunlar" },
+  { href: "/hakkimizda", label: "Hakkımızda", short: "Hakkında" },
+  { href: "/egitim", label: "Eğitim", short: "Eğitim" },
+  { href: "/kurumsal", label: "Kurumsal", short: "Kurumsal" },
+  { href: "/iletisim", label: "İletişim", short: "İletişim" },
 ];
 
 export default function Header() {
@@ -30,7 +31,8 @@ export default function Header() {
         <nav className="nav">
           {NAV_LINKS.map((l) => (
             <Link key={l.href} href={l.href} className={isActive(l.href) ? "on" : ""}>
-              {l.label}
+              <span className="nav-full">{l.label}</span>
+              <span className="nav-short">{l.short}</span>
             </Link>
           ))}
         </nav>
